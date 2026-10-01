@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Account & Data Deletion - Dikjyoti Online Test</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>ЁЯУЭ</text></svg>">
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-dark: #172554;
+            --primary-light: #2563EB;
+            --danger: #DC2626;
+            --danger-bg: #FEF2F2;
+            --danger-border: #FCA5A5;
+            --bg: #F8FAFC;
+            --surface: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --border: #E2E8F0;
+            --success: #16A34A;
+            --success-bg: #F0FDF4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 24px 16px;
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            background: var(--surface);
+            border-radius: 16px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 100%);
+            color: #FFFFFF;
+            padding: 36px 28px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #DBEAFE;
+            font-size: 15px;
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        .app-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FDBA74;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .content {
+            padding: 32px 28px;
+        }
+
+        .notice-box {
+            background-color: var(--danger-bg);
+            border-left: 4px solid var(--danger);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+        }
+
+        .notice-box h3 {
+            color: var(--danger);
+            font-size: 16px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notice-box p {
+            font-size: 14px;
+            color: #7F1D1D;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-list {
+            list-style: none;
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        @media (min-width: 600px) {
+            .data-list {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .data-item {
+            background: #F8FAFC;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .data-item.delete {
+            border-left: 3px solid var(--danger);
+        }
+
+        .data-item.keep {
+            border-left: 3px solid #EAB308;
+        }
+
+        .badge-del {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        .badge-keep {
+            color: #CA8A04;
+            font-weight: 700;
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .required {
+            color: var(--danger);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            color: var(--text-main);
+            background: #FFFFFF;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 85px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 14px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input {
+            margin-top: 4px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--danger);
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .btn-submit {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover {
+            background-color: #B91C1C;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.99);
+        }
+
+        .success-message {
+            display: none;
+            background-color: var(--success-bg);
+            border: 1.5px solid #86EFAC;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .success-message h4 {
+            color: var(--success);
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .success-message p {
+            color: #166534;
+            font-size: 14px;
+        }
+
+        .footer {
+            background-color: #F1F5F9;
+            padding: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer a {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <span class="app-badge">Dikjyoti Online Test</span>
+        <h1>Account & Data Deletion Request</h1>
+        <p>In compliance with Google Play Store User Data Policy, submit your request to permanently delete your account and associated personal data.</p>
+    </div>
+
+    <div class="content">
+        <!-- Warning Notice -->
+        <div class="notice-box">
+            <h3>тЪая╕П Important: Deletion is Permanent</h3>
+            <p>Once your account is deleted, your exam records, test results, bookmarks, and test history cannot be recovered under any circumstances.</p>
+        </div>
+
+        <!-- Section: What data will be deleted -->
+        <h2 class="section-title">ЁЯЧСя╕П What Data Will Be Deleted:</h2>
+        <div class="data-list">
+            <div class="data-item delete">
+                <span class="badge-del">тЬХ</span>
+                <div>
+                    <strong>User Profile:</strong> Name, Email Address, Phone Number, and Profile Avatar.
+                </div>
+            </div>
+            <div class="data-item delete">
+                <span class="badge-del">тЬХ</span>
+                <div>
+                    <strong>Test History & Scores:</strong> All exam attempts, answer sheets, rank records, and performance analytics.
+                </div>
+            </div>
+            <div class="data-item delete">
+                <span class="badge-del">тЬХ</span>
+                <div>
+                    <strong>Saved Data:</strong> Bookmarked questions, notes, and study bookmarks.
+                </div>
+            </div>
+            <div class="data-item delete">
+                <span class="badge-del">тЬХ</span>
+                <div>
+                    <strong>Firebase Authentication:</strong> Permanent removal from Firebase Auth & Firestore.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Retention -->
+        <h2 class="section-title">тП│ Data Retention Period:</h2>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">
+            Account deletion requests are processed within <strong>7 to 14 business days</strong>. Financial purchase transaction receipts (if any) may be retained securely for statutory accounting and legal tax compliance as required under applicable law, but will be completely disassociated from your user profile.
+        </p>
+
+        <!-- Alternative: Inside App Deletion -->
+        <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 14px 18px; margin-bottom: 24px; font-size: 14px; color: #1E40AF;">
+            ЁЯТб <strong>In-App Deletion:</strong> You can also delete your account directly inside the Android app by navigating to: <strong>Profile / Settings тЮФ Delete Account</strong>.
+        </div>
+
+        <!-- Request Form -->
+        <h2 class="section-title">ЁЯУЛ Submit Deletion Request via Web Form:</h2>
+        <div class="form-container">
+            <form id="deleteForm" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label for="fullName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name as in the app" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Registered Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="example@gmail.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Registered Phone Number (Optional)</label>
+                    <input type="text" id="phone" name="phone" placeholder="+91 XXXXXXXXXX">
+                </div>
+
+                <div class="form-group">
+                    <label for="reason">Reason for Account Deletion (Optional)</label>
+                    <textarea id="reason" name="reason" placeholder="Please let us know why you wish to delete your account (e.g. no longer preparing for exams, privacy concerns, etc.)"></textarea>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="confirmation" required>
+                    <label for="confirmation">
+                        I confirm that I want to permanently delete my Dikjyoti Online Test account and all associated test scores, attempts, and data. I understand this action cannot be undone. <span class="required">*</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <span>Submit Account Deletion Request</span>
+                </button>
+            </form>
+
+            <div id="successMsg" class="success-message">
+                <h4>тЬЕ Request Received Successfully!</h4>
+                <p>Your request has been logged. An email confirmation has been initiated to our support team (<strong>shajamalali675@gmail.com</strong>). Your account and associated data will be permanently removed within 7-14 business days.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Dikjyoti Online Test</strong> (Package: <code>com.dikjyoti.examportal.cjh.app</code>)</p>
+        <p style="margin-top: 4px;">Support Contact: <a href="mailto:shajamalali675@gmail.com">shajamalali675@gmail.com</a></p>
+        <p style="margin-top: 8px;">
+            <a href="privacy_policy.html" target="_blank">Privacy Policy</a> тАв 
+            <a href="mailto:shajamalali675@gmail.com?subject=Dikjyoti Support">Contact Support</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        
+        const fullName = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim() || 'Not provided';
+        const reason = document.getElementById('reason').value.trim() || 'Not specified';
+        
+        const subject = encodeURIComponent("Account Deletion Request - Dikjyoti Online Test");
+        const body = encodeURIComponent(
+            `Hello Dikjyoti Support Team,\n\n` +
+            `I would like to request the permanent deletion of my account and all associated personal data from Dikjyoti Online Test.\n\n` +
+            `Details:\n` +
+            `- Full Name: ${fullName}\n` +
+            `- Registered Email: ${email}\n` +
+            `- Registered Phone: ${phone}\n` +
+            `- Reason for Deletion: ${reason}\n\n` +
+            `I understand that this action is irreversible and all my test scores, attempts, and profile info will be permanently purged.\n\n` +
+            `Thank you.`
+        );
+
+        // Show success UI
+        document.getElementById('deleteForm').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+
+        // Trigger user mail client with pre-filled details to ensure delivery
+        setTimeout(() => {
+            window.location.href = `mailto:shajamalali675@gmail.com?subject=${subject}&body=${body}`;
+        }, 1200);
+    }
+</script>
+
+</body>
+</html>
